@@ -8,7 +8,27 @@
     try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
   </script>
   <title>Jonathan Ramírez · Full Stack & Datos</title>
-  <meta name="description" content="Hoja de vida y portafolio de Jonathan Stiven Ramírez Pava: Desarrollador Full Stack y Analista de Datos (Cloud, ETL y BI).">
+  <meta name="description" content="Hoja de vida y portafolio de Jonathan Stiven Ramírez Pava: Desarrollador Full Stack y Analista de Datos (Cloud, ETL y BI) en Bogotá, Colombia.">
+  <meta name="author" content="Jonathan Stiven Ramírez Pava">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="canonical" href="https://zseuz.github.io/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Vista previa al compartir (LinkedIn, WhatsApp, Facebook, X) -->
+  <meta property="og:type" content="profile">
+  <meta property="og:url" content="https://zseuz.github.io/">
+  <meta property="og:title" content="Jonathan Ramírez · Full Stack & Analista de Datos">
+  <meta property="og:description" content="APIs con Java/Spring Boot, interfaces en Angular y React, pipelines ETL con Python y tableros en Power BI. Mira mis proyectos y descarga mi CV.">
+  <meta property="og:image" content="https://zseuz.github.io/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="es_CO">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Jonathan Ramírez · Full Stack & Analista de Datos">
+  <meta name="twitter:description" content="APIs con Java/Spring Boot, Angular, React, ETL con Python y Power BI.">
+  <meta name="twitter:image" content="https://zseuz.github.io/img/og.jpg">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -16,6 +36,7 @@
     :root {
       --bg: #f7f8fa; --surface: #ffffff; --text: #16191f; --muted: #5b6472;
       --border: #e3e6eb; --accent: #2563eb; --accent-soft: #e8efff; --chip: #f0f2f5;
+      --accent2: #9333ea; --accent3: #06b6d4; --wa: #25d366;
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
@@ -29,53 +50,70 @@
       --border: #262e3a; --accent: #6ea2ff; --accent-soft: #17233a; --chip: #1c232e;
       --accent2: #c084fc; --accent3: #22d3ee;
     }
-    body, nav, .card, .stat, .skill, .btn, .tag { transition: background-color .4s, color .4s, border-color .4s; }
-
-    .theme-toggle {
-      flex: none; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: grid; place-items: center;
-      border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 18px;
-      transition: transform .4s, border-color .2s;
-    }
-    .theme-toggle:hover { border-color: var(--accent); transform: rotate(25deg); }
-    .theme-toggle .sun { display: none; }
-    :root[data-theme="dark"] .theme-toggle .sun { display: inline; }
-    :root[data-theme="dark"] .theme-toggle .moon { display: none; }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) .theme-toggle .sun { display: inline; }
-      :root:not([data-theme="light"]) .theme-toggle .moon { display: none; }
-    }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0; background: var(--bg); color: var(--text);
       font: 16px/1.6 Inter, system-ui, sans-serif;
+      transition: background-color .4s, color .4s;
     }
     a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
-    .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
 
+    /* ---------- Menú ---------- */
     nav {
       position: sticky; top: 0; z-index: 10;
       background: color-mix(in srgb, var(--bg) 85%, transparent);
       backdrop-filter: blur(8px); border-bottom: 1px solid var(--border);
     }
-    nav .wrap { display: flex; gap: 20px; align-items: center; height: 56px; overflow-x: auto; }
+    nav .wrap { display: flex; gap: 18px; align-items: center; height: 56px; }
     nav .brand { font-weight: 700; color: var(--text); margin-right: auto; white-space: nowrap; }
-    nav a.link { color: var(--muted); font-size: 14px; white-space: nowrap; }
+    nav .links { display: flex; gap: 18px; overflow-x: auto; scrollbar-width: none; }
+    nav a.link { color: var(--muted); font-size: 14px; white-space: nowrap; transition: color .2s; }
+    nav a.link.active { color: var(--accent); font-weight: 600; }
+    .tools { display: flex; gap: 8px; flex: none; }
+    .icon-btn {
+      height: 36px; min-width: 36px; padding: 0 10px; border-radius: 999px; cursor: pointer; display: grid; place-items: center;
+      border: 1px solid var(--border); background: var(--surface); color: var(--text); font: 600 13px Inter, sans-serif;
+      transition: transform .3s, border-color .2s, background-color .4s;
+    }
+    .icon-btn:hover { border-color: var(--accent); }
+    #theme-toggle:hover { transform: rotate(25deg); }
+    #theme-toggle .sun { display: none; }
+    :root[data-theme="dark"] #theme-toggle .sun { display: inline; }
+    :root[data-theme="dark"] #theme-toggle .moon { display: none; }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) #theme-toggle .sun { display: inline; }
+      :root:not([data-theme="light"]) #theme-toggle .moon { display: none; }
+    }
+    @media (max-width: 720px) {
+      nav .links { display: none; }
+    }
 
+    /* ---------- Encabezado ---------- */
     header { padding: 64px 0 40px; }
-    header h1 { font-size: clamp(30px, 5vw, 44px); line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.02em; }
-    header .role { font-size: 18px; color: var(--muted); margin: 0 0 20px; }
+    header h1 { font-size: clamp(30px, 5vw, 46px); line-height: 1.15; margin: 0 0 8px; letter-spacing: -0.02em; }
+    header .role { font-size: 18px; color: var(--muted); margin: 0 0 20px; min-height: 1.6em; }
     .contact { display: flex; flex-wrap: wrap; gap: 8px 18px; color: var(--muted); font-size: 14px; margin-bottom: 24px; }
     .btns { display: flex; flex-wrap: wrap; gap: 10px; }
     .btn {
-      display: inline-block; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px;
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px;
       border: 1px solid var(--border); color: var(--text); background: var(--surface);
+      transition: transform .2s, box-shadow .2s, background-color .4s;
     }
-    .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-    .btn:hover { text-decoration: none; filter: brightness(1.05); }
+    .btn:hover { text-decoration: none; transform: translateY(-2px); box-shadow: 0 8px 24px -8px var(--accent); }
+    .btn.primary {
+      color: #fff; border: 0;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+      background-size: 200% 100%; animation: shine 6s linear infinite;
+    }
+    .btn.wa { background: var(--wa); border-color: var(--wa); color: #fff; }
+    .btn.wa:hover { box-shadow: 0 8px 24px -8px var(--wa); }
+    .btn svg { width: 18px; height: 18px; fill: currentColor; }
 
-    section { padding: 36px 0; border-top: 1px solid var(--border); }
+    /* ---------- Secciones ---------- */
+    section { padding: 40px 0; border-top: 1px solid var(--border); scroll-margin-top: 64px; }
     h2 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin: 0 0 20px; }
     .lead { font-size: 17px; max-width: 75ch; margin: 0; }
 
@@ -92,32 +130,110 @@
     .job ul { margin: 0; padding-left: 18px; }
     .job li { margin-bottom: 6px; }
     .job li strong { font-weight: 600; }
+    .job > div:last-child { border-left: 2px solid var(--border); padding-left: 20px; position: relative; }
+    .job > div:last-child::before {
+      content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft);
+    }
     @media (max-width: 640px) { .job { grid-template-columns: 1fr; } }
 
-    .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
-    .card {
-      background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px;
-      display: flex; flex-direction: column; gap: 10px; transition: border-color .15s, transform .15s;
+    /* ---------- Proyectos ---------- */
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .filter {
+      cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--muted);
+      padding: 6px 14px; border-radius: 999px; font: 500 14px Inter, sans-serif; transition: all .2s;
     }
-    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .filter:hover { border-color: var(--accent); color: var(--text); }
+    .filter.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    .projects { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+      display: flex; flex-direction: column; position: relative;
+      transition: border-color .2s, transform .25s, box-shadow .25s, opacity .3s, background-color .4s;
+    }
+    .card:hover { border-color: var(--accent); transform: translateY(-6px); box-shadow: 0 18px 40px -20px var(--accent); }
+    .card.hide { display: none; }
+    .card::before {
+      content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 1;
+      background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 18%, transparent), transparent 60%);
+    }
+    .card:hover::before { opacity: 1; }
+    .shot { aspect-ratio: 16 / 10; overflow: hidden; border-bottom: 1px solid var(--border); background: var(--chip); }
+    .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform .6s; }
+    .card:hover .shot img { transform: scale(1.05); }
+    .cover {
+      aspect-ratio: 16 / 10; display: grid; place-items: center; text-align: center; color: #fff; position: relative; overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .cover .ic { font-size: 54px; line-height: 1; transition: transform .4s; }
+    .card:hover .cover .ic { transform: scale(1.15) rotate(-6deg); }
+    .cover small { display: block; margin-top: 10px; font: 500 12px "JetBrains Mono", monospace; opacity: .9; letter-spacing: .04em; }
+    .cover::after {
+      content: ""; position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(255,255,255,.18) 1px, transparent 1px); background-size: 16px 16px;
+    }
+    .c-data { background: linear-gradient(135deg, #1e3a8a, #0891b2); }
+    .c-auto { background: linear-gradient(135deg, #be185d, #ea580c); }
+    .c-chat { background: linear-gradient(135deg, #047857, #10b981); }
+    .c-fin  { background: linear-gradient(135deg, #6d28d9, #db2777); }
+    .body { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
     .card h3 { margin: 0; font-size: 17px; }
     .card p { margin: 0; color: var(--muted); font-size: 14px; flex: 1; }
-    .card .repo { font-family: "JetBrains Mono", monospace; font-size: 12px; }
+    .links-row { display: flex; gap: 8px; margin-top: 4px; position: relative; z-index: 2; }
+    .mini {
+      font-size: 13px; font-weight: 600; padding: 5px 12px; border-radius: 7px; border: 1px solid var(--border); color: var(--text);
+    }
+    .mini:hover { text-decoration: none; border-color: var(--accent); color: var(--accent); }
+    .mini.demo { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .mini.demo:hover { color: #fff; filter: brightness(1.1); }
+    .badge {
+      position: absolute; top: 12px; right: 12px; z-index: 2; background: #16a34a; color: #fff;
+      font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; letter-spacing: .04em;
+      animation: pulse-badge 2s ease-in-out infinite;
+    }
+    @keyframes pulse-badge { 50% { box-shadow: 0 0 0 6px rgba(22, 163, 74, .25); } }
+
     .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag { background: var(--chip); border-radius: 999px; padding: 2px 10px; font-size: 12px; color: var(--muted); }
+    .tag { background: var(--chip); border-radius: 999px; padding: 2px 10px; font-size: 12px; color: var(--muted); transition: background .2s, color .2s; }
 
     .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
-    .skill { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+    .skill { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; transition: transform .25s, box-shadow .25s, background-color .4s; }
     .skill h3 { margin: 0 0 10px; font-size: 15px; }
+    .skill:hover { transform: translateY(-4px); box-shadow: 0 12px 30px -14px var(--accent); }
+    .skill:hover .tag { background: var(--accent-soft); color: var(--accent); }
+    .stat { transition: transform .25s, box-shadow .25s, background-color .4s; }
+    .stat:hover { transform: translateY(-4px); box-shadow: 0 12px 30px -14px var(--accent); }
 
     .edu b { display: block; }
     .edu span { color: var(--muted); font-size: 14px; }
 
+    /* ---------- Contacto ---------- */
+    .cta {
+      border-radius: 16px; padding: 32px; text-align: center; color: #fff; position: relative; overflow: hidden;
+      background: linear-gradient(120deg, #2563eb, #7e22ce, #0e7490, #2563eb);
+      background-size: 300% 100%; animation: shine 12s linear infinite;
+    }
+    .cta h3 { margin: 0 0 8px; font-size: clamp(22px, 4vw, 30px); }
+    .cta p { margin: 0 auto 22px; max-width: 52ch; opacity: .92; }
+    .cta .btns { justify-content: center; }
+    .cta .btn:not(.wa) { background: rgba(255,255,255,.15); border-color: rgba(255,255,255,.35); color: #fff; }
+
+    .wa-float {
+      position: fixed; right: 20px; bottom: 20px; z-index: 30; width: 56px; height: 56px; border-radius: 50%;
+      background: var(--wa); display: grid; place-items: center; box-shadow: 0 8px 24px rgba(0,0,0,.25);
+      transition: transform .25s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+    .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+    .wa-float::after {
+      content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--wa);
+      animation: pulse 2.4s ease-out infinite;
+    }
+
     footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border); }
 
     /* ---------- Animaciones ---------- */
-    :root { --accent2: #9333ea; --accent3: #06b6d4; }
-
     .bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
     .blob { position: absolute; width: 480px; height: 480px; border-radius: 50%; filter: blur(90px); opacity: .28; }
     .blob.b1 { background: var(--accent); top: -140px; left: -120px; animation: float1 18s ease-in-out infinite; }
@@ -157,41 +273,8 @@
     .typed::after { content: "▍"; color: var(--accent); animation: blink 1s steps(1) infinite; margin-left: 2px; }
     @keyframes blink { 50% { opacity: 0; } }
 
-    .btn { transition: transform .2s, box-shadow .2s; }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -8px var(--accent); }
-    .btn.primary {
-      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
-      background-size: 200% 100%; border: 0; animation: shine 6s linear infinite;
-    }
-
     .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
     .reveal.in { opacity: 1; transform: none; }
-
-    .stat, .skill { transition: transform .25s, box-shadow .25s; }
-    .stat:hover, .skill:hover { transform: translateY(-4px); box-shadow: 0 12px 30px -14px var(--accent); }
-
-    .card { position: relative; overflow: hidden; color: var(--text); }
-    .card::before {
-      content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .3s; pointer-events: none;
-      background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%);
-    }
-    .card:hover::before { opacity: 1; }
-    .card:hover { text-decoration: none; transform: translateY(-6px); box-shadow: 0 18px 40px -20px var(--accent); }
-    .card { transition: border-color .2s, transform .25s, box-shadow .25s; }
-
-    .tag { transition: background .2s, color .2s; }
-    .skill:hover .tag { background: var(--accent-soft); color: var(--accent); }
-
-    .job { position: relative; }
-    .job > div:last-child { border-left: 2px solid var(--border); padding-left: 20px; position: relative; }
-    .job > div:last-child::before {
-      content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%;
-      background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft);
-    }
-
-    section { scroll-margin-top: 64px; }
-    nav a.link { transition: color .2s; }
-    nav a.link.active { color: var(--accent); font-weight: 600; }
 
     #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 20;
       background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3)); }
@@ -202,29 +285,38 @@
     }
 
     @media print {
-      .bg, #progress { display: none; }
-      .reveal { opacity: 1; transform: none; }
-      .grad { color: #000; background: none; }
-      nav, .btns, footer { display: none; }
+      nav, .btns, footer, .bg, #progress, .wa-float, .filters, .cta, .shot, .cover, .links-row { display: none !important; }
       body { background: #fff; color: #000; }
       section { padding: 16px 0; }
+      .reveal { opacity: 1; transform: none; }
+      .grad { color: #000; background: none; }
       .card:hover { transform: none; }
     }
   </style>
+
+  <!-- Contador de visitas (GoatCounter): empieza a contar cuando se crea el sitio "zseuz" en goatcounter.com -->
+  <script data-goatcounter="https://zseuz.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
   <div id="progress"></div>
   <div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
   <nav>
     <div class="wrap">
       <a class="brand" href="#">Jonathan Ramírez</a>
-      <a class="link" href="#perfil">Perfil</a>
-      <a class="link" href="#experiencia">Experiencia</a>
-      <a class="link" href="#proyectos">Proyectos</a>
-      <a class="link" href="#habilidades">Habilidades</a>
-      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Cambiar entre modo claro y oscuro" title="Modo claro / oscuro">
-        <span class="moon">🌙</span><span class="sun">☀️</span>
-      </button>
+      <div class="links">
+        <a class="link" href="#perfil" data-en="Profile">Perfil</a>
+        <a class="link" href="#experiencia" data-en="Experience">Experiencia</a>
+        <a class="link" href="#proyectos" data-en="Projects">Proyectos</a>
+        <a class="link" href="#habilidades" data-en="Skills">Habilidades</a>
+        <a class="link" href="#contacto" data-en="Contact">Contacto</a>
+      </div>
+      <div class="tools">
+        <button class="icon-btn" id="lang-toggle" type="button" title="English / Español" aria-label="Cambiar idioma">EN</button>
+        <button class="icon-btn" id="theme-toggle" type="button" title="Modo claro / oscuro" aria-label="Cambiar entre modo claro y oscuro">
+          <span class="moon">🌙</span><span class="sun">☀️</span>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -232,22 +324,26 @@
     <header>
       <div class="avatar">JR</div>
       <h1>Jonathan Stiven <span class="grad">Ramírez Pava</span></h1>
-      <p class="role">Desarrollador Full Stack &amp; Analista de Datos · <span class="typed" id="typed">Cloud, ETL &amp; BI</span></p>
+      <p class="role"><span data-en="Full Stack Developer &amp; Data Analyst">Desarrollador Full Stack &amp; Analista de Datos</span> · <span class="typed" id="typed">Cloud, ETL &amp; BI</span></p>
       <div class="contact">
-        <span>📍 Bogotá, Colombia</span>
+        <span data-en="📍 Bogotá, Colombia · Open to remote">📍 Bogotá, Colombia · Disponible remoto</span>
         <a href="mailto:jonathanramir52@gmail.com">✉️ jonathanramir52@gmail.com</a>
         <a href="https://www.linkedin.com/in/jonathan-pava-ramirez/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://github.com/zseuz" target="_blank" rel="noopener">GitHub · zseuz</a>
       </div>
       <div class="btns">
-        <a class="btn primary" href="CV_Jonathan_Ramirez.pdf" download>Descargar CV (PDF)</a>
-        <a class="btn" href="#proyectos">Ver proyectos</a>
+        <a class="btn primary" href="CV_Jonathan_Ramirez.pdf" download data-en="Download CV (PDF)">Descargar CV (PDF)</a>
+        <a class="btn" href="#proyectos" data-en="See projects">Ver proyectos</a>
+        <a class="btn wa js-wa" href="https://wa.me/573135612983" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.3Z"/></svg>
+          WhatsApp
+        </a>
       </div>
     </header>
 
     <section id="perfil">
-      <h2>Perfil profesional</h2>
-      <p class="lead">
+      <h2 data-en="Professional profile">Perfil profesional</h2>
+      <p class="lead" data-en="Full Stack Developer and Data Analyst with 3+ years of experience building scalable web applications, backend architectures, process automation (RPA), cloud infrastructure and large-scale data processing, integrating generative AI solutions. RESTful APIs with Java (Spring Boot), PHP (Laravel) and Node.js, with Angular, React and Vue.js front ends. Specialized in Python ETL pipelines, dimensional modeling, Power BI and high-performance SQL (PostgreSQL, SQL Server, MySQL), plus AI-assisted development with LLMs such as Claude and OpenAI.">
         Desarrollador Full Stack y Analista de Datos con más de 3 años de experiencia construyendo aplicaciones web escalables,
         arquitecturas backend, automatización de procesos (RPA), infraestructura cloud y procesamiento masivo de información,
         integrando soluciones con IA generativa. APIs RESTful con Java (Spring Boot), PHP (Laravel) y Node.js, con interfaces en
@@ -255,154 +351,227 @@
         (PostgreSQL, SQL Server, MySQL), además de desarrollo asistido por IA con LLMs como Claude y OpenAI.
       </p>
       <div class="stats">
-        <div class="stat"><b data-count="3" data-suffix="+">3+</b><span>años de experiencia</span></div>
-        <div class="stat"><b data-count="80" data-prefix="-" data-suffix="%">-80%</b><span>trabajo manual con RPA/ETL</span></div>
-        <div class="stat"><b data-count="50" data-prefix="-" data-suffix="%">-50%</b><span>latencia de consultas SQL</span></div>
-        <div class="stat"><b data-count="10" data-suffix="+">10+</b><span>proyectos recientes en GitHub</span></div>
+        <div class="stat"><b data-count="3" data-suffix="+">3+</b><span data-en="years of experience">años de experiencia</span></div>
+        <div class="stat"><b data-count="80" data-prefix="-" data-suffix="%">-80%</b><span data-en="manual work with RPA/ETL">trabajo manual con RPA/ETL</span></div>
+        <div class="stat"><b data-count="50" data-prefix="-" data-suffix="%">-50%</b><span data-en="SQL query latency">latencia de consultas SQL</span></div>
+        <div class="stat"><b data-count="10" data-suffix="+">10+</b><span data-en="recent projects on GitHub">proyectos recientes en GitHub</span></div>
       </div>
     </section>
 
     <section id="experiencia">
-      <h2>Experiencia</h2>
+      <h2 data-en="Experience">Experiencia</h2>
 
       <div class="job">
-        <div class="when">Jul 2023 – Ago 2026</div>
+        <div class="when" data-en="Jul 2023 – Aug 2026">Jul 2023 – Ago 2026</div>
         <div>
-          <h3>Analista de Datos, Desarrollador Full Stack &amp; BI</h3>
+          <h3 data-en="Data Analyst, Full Stack &amp; BI Developer">Analista de Datos, Desarrollador Full Stack &amp; BI</h3>
           <div class="org">Athenea Crescend Business</div>
           <ul>
-            <li><strong>Pipelines ETL, RPA y automatización con Python:</strong> bots RPA, flujos ETL e integración de LLMs (Claude) con Pandas y Playwright para extracción, limpieza y validación de datos (RIPS, XML, CUV), reduciendo el trabajo manual en un 80%.</li>
-            <li><strong>Infraestructura cloud y servidores Linux:</strong> despliegue de procesos automatizados, tareas programadas (cron) y gestión segura de bases de datos.</li>
-            <li><strong>Desarrollo web full stack:</strong> módulos transaccionales de gestión de cartera con PHP en el backend y React/Angular en el frontend.</li>
-            <li><strong>Optimización backend y tuning SQL:</strong> procedimientos almacenados y modelos dimensionales en MySQL y SQL Server, reduciendo la latencia de las consultas en un 50%.</li>
-            <li><strong>Visualización BI:</strong> tableros y KPIs en Power BI para seguimiento en tiempo real de cartera, flujo de caja y conciliaciones.</li>
+            <li><strong data-en="ETL pipelines, RPA and Python automation:">Pipelines ETL, RPA y automatización con Python:</strong> <span data-en="RPA bots, ETL flows and LLM (Claude) integration with Pandas and Playwright for data extraction, cleaning and validation (RIPS, XML, CUV), cutting manual work by 80%.">bots RPA, flujos ETL e integración de LLMs (Claude) con Pandas y Playwright para extracción, limpieza y validación de datos (RIPS, XML, CUV), reduciendo el trabajo manual en un 80%.</span></li>
+            <li><strong data-en="Cloud infrastructure and Linux servers:">Infraestructura cloud y servidores Linux:</strong> <span data-en="deployment of automated processes, scheduled tasks (cron) and secure database management.">despliegue de procesos automatizados, tareas programadas (cron) y gestión segura de bases de datos.</span></li>
+            <li><strong data-en="Full stack web development:">Desarrollo web full stack:</strong> <span data-en="transactional modules for portfolio management with a PHP backend and React/Angular front ends.">módulos transaccionales de gestión de cartera con PHP en el backend y React/Angular en el frontend.</span></li>
+            <li><strong data-en="Backend optimization and SQL tuning:">Optimización backend y tuning SQL:</strong> <span data-en="stored procedures and dimensional models in MySQL and SQL Server, cutting query latency by 50%.">procedimientos almacenados y modelos dimensionales en MySQL y SQL Server, reduciendo la latencia de las consultas en un 50%.</span></li>
+            <li><strong data-en="BI visualization:">Visualización BI:</strong> <span data-en="Power BI dashboards and KPIs for real-time tracking of portfolio, cash flow and reconciliations.">tableros y KPIs en Power BI para seguimiento en tiempo real de cartera, flujo de caja y conciliaciones.</span></li>
           </ul>
         </div>
       </div>
 
       <div class="job">
-        <div class="when">Oct 2022 – Mar 2023</div>
+        <div class="when" data-en="Oct 2022 – Mar 2023">Oct 2022 – Mar 2023</div>
         <div>
-          <h3>Desarrollador Web y Analista Backend</h3>
+          <h3 data-en="Web Developer and Backend Analyst">Desarrollador Web y Analista Backend</h3>
           <div class="org">Brander Ideas</div>
           <ul>
-            <li><strong>APIs RESTful:</strong> diseño e implementación en Java (Spring Boot) integradas con interfaces Angular.</li>
-            <li><strong>Modelado y tuning de bases de datos:</strong> modelos relacionales y consultas avanzadas en PostgreSQL para reportes analíticos masivos.</li>
+            <li><strong data-en="RESTful APIs:">APIs RESTful:</strong> <span data-en="design and implementation in Java (Spring Boot) integrated with Angular front ends.">diseño e implementación en Java (Spring Boot) integradas con interfaces Angular.</span></li>
+            <li><strong data-en="Database modeling and tuning:">Modelado y tuning de bases de datos:</strong> <span data-en="relational models and advanced PostgreSQL queries for large analytical reports.">modelos relacionales y consultas avanzadas en PostgreSQL para reportes analíticos masivos.</span></li>
           </ul>
         </div>
       </div>
 
       <div class="job">
-        <div class="when">Ene 2020 – Jun 2020</div>
+        <div class="when" data-en="Jan 2020 – Jun 2020">Ene 2020 – Jun 2020</div>
         <div>
-          <h3>Aprendiz de Desarrollo y Análisis de Sistemas</h3>
+          <h3 data-en="Systems Development and Analysis Apprentice">Aprendiz de Desarrollo y Análisis de Sistemas</h3>
           <div class="org">Montechelo</div>
           <ul>
-            <li><strong>Calidad y backend:</strong> pruebas unitarias y validaciones de lógica de negocio en PHP (Laravel).</li>
-            <li><strong>Frontend interactivo:</strong> componentes dinámicos en Vue.js para mejorar el flujo operativo.</li>
+            <li><strong data-en="Quality and backend:">Calidad y backend:</strong> <span data-en="unit tests and business-logic validation in PHP (Laravel).">pruebas unitarias y validaciones de lógica de negocio en PHP (Laravel).</span></li>
+            <li><strong data-en="Interactive front end:">Frontend interactivo:</strong> <span data-en="dynamic Vue.js components to improve the operational workflow.">componentes dinámicos en Vue.js para mejorar el flujo operativo.</span></li>
           </ul>
         </div>
       </div>
     </section>
 
     <section id="proyectos">
-      <h2>Proyectos en GitHub</h2>
+      <h2 data-en="Projects on GitHub">Proyectos en GitHub</h2>
+      <div class="filters" role="group" aria-label="Filtrar proyectos">
+        <button class="filter on" data-filter="all" data-en="All">Todos</button>
+        <button class="filter" data-filter="datos" data-en="Data &amp; BI">Datos &amp; BI</button>
+        <button class="filter" data-filter="fullstack">Full Stack</button>
+        <button class="filter" data-filter="auto" data-en="Automation">Automatización</button>
+      </div>
+
       <div class="projects">
-        <a class="card" href="https://github.com/zseuz/analitica-cobranza-sql-etl-powerbi" target="_blank" rel="noopener">
-          <h3>Analítica de cobranza</h3>
-          <p>Modelo en SQL Server, ETL diario en Python, data mart, dashboard de KPIs en Power BI y resumen ejecutivo generado con IA.</p>
-          <div class="tags"><span class="tag">SQL Server</span><span class="tag">Python</span><span class="tag">Power BI</span><span class="tag">Gemini API</span></div>
-          <span class="repo">zseuz/analitica-cobranza-sql-etl-powerbi</span>
-        </a>
-        <a class="card" href="https://github.com/zseuz/-job-search" target="_blank" rel="noopener">
-          <h3>Buscador de empleos</h3>
-          <p>Reúne ofertas de 7 portales en una sola página con filtros por tecnología, salario, fecha y modalidad. 380 tests, 99% de cobertura.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Scraping</span><span class="tag">MVC</span></div>
-          <span class="repo">zseuz/-job-search</span>
-        </a>
-        <a class="card" href="https://github.com/zseuz/biblioteca" target="_blank" rel="noopener">
-          <h3>Sistema de Biblioteca</h3>
-          <p>Gestión de libros, usuarios y préstamos con reglas de negocio y panel de estadísticas.</p>
-          <div class="tags"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Angular</span><span class="tag">H2</span></div>
-          <span class="repo">zseuz/biblioteca</span>
-        </a>
-        <a class="card" href="https://github.com/zseuz/biblioteca-chatbot" target="_blank" rel="noopener">
-          <h3>Asistente de la Biblioteca</h3>
-          <p>Chatbot en español que consulta la API de la biblioteca: préstamos vencidos, disponibilidad y más, con reglas y sin costo de IA.</p>
-          <div class="tags"><span class="tag">Spring MVC</span><span class="tag">Angular</span><span class="tag">REST</span></div>
-          <span class="repo">zseuz/biblioteca-chatbot</span>
-        </a>
-        <a class="card" href="https://github.com/zseuz/biblioteca-n8n" target="_blank" rel="noopener">
-          <h3>Automatizaciones n8n</h3>
-          <p>Recordatorios de préstamos, informe semanal, importación de libros desde CSV y alerta si el servidor se cae.</p>
-          <div class="tags"><span class="tag">n8n</span><span class="tag">Node.js</span><span class="tag">Automatización</span></div>
-          <span class="repo">zseuz/biblioteca-n8n</span>
-        </a>
-        <a class="card" href="https://github.com/zseuz/analisis-campa-a" target="_blank" rel="noopener">
-          <h3>Pipeline ETL · Campaña WhatsApp</h3>
-          <p>Ingesta, procesamiento y análisis del rendimiento de una campaña masiva por la API de WhatsApp, explotado en Power BI.</p>
-          <div class="tags"><span class="tag">Python</span><span class="tag">ETL</span><span class="tag">Power BI</span></div>
-          <span class="repo">zseuz/analisis-campa-a</span>
-        </a>
-        <a class="card" href="https://github.com/zseuz/pokemon-champions" target="_blank" rel="noopener">
-          <h3>Champions Coach</h3>
-          <p>Asistente competitivo para Pokémon Champions: ranking del meta, armado de equipos, builds y asistente de combate turno a turno.</p>
-          <div class="tags"><span class="tag">React 19</span><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">SQLite</span></div>
-          <span class="repo">zseuz/pokemon-champions</span>
-        </a>
-        <a class="card" href="https://github.com/zseuz/anime-tracker" target="_blank" rel="noopener">
-          <h3>AnimeTracker</h3>
-          <p>Explora animes, marca capítulos vistos y recibe aviso de nuevos episodios. Pruebas e2e con Playwright y accesibilidad con axe.</p>
-          <div class="tags"><span class="tag">Angular</span><span class="tag">Express</span><span class="tag">MySQL</span><span class="tag">Playwright</span></div>
-          <span class="repo">zseuz/anime-tracker</span>
-        </a>
-        <a class="card" href="https://github.com/zseuz/google-forms" target="_blank" rel="noopener">
-          <h3>Forms Clone</h3>
-          <p>Clon de Google Forms: constructor drag &amp; drop, 8 tipos de pregunta, validación y resumen visual de respuestas.</p>
-          <div class="tags"><span class="tag">Angular</span><span class="tag">Material</span><span class="tag">TypeScript</span></div>
-          <span class="repo">zseuz/google-forms</span>
-        </a>
-        <a class="card" href="https://github.com/zseuz/finanzas-back" target="_blank" rel="noopener">
-          <h3>Control de finanzas</h3>
-          <p>API REST de finanzas personales (transacciones, categorías y dashboard) con su frontend en Angular.</p>
-          <div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLAlchemy</span><span class="tag">MySQL</span><span class="tag">Angular</span></div>
-          <span class="repo">zseuz/finanzas-back · finanzas-front</span>
-        </a>
+        <article class="card" data-cat="datos auto">
+          <div class="cover c-data"><div><div class="ic">📊</div><small>SQL SERVER → PYTHON → POWER BI</small></div></div>
+          <div class="body">
+            <h3 data-en="Collections analytics">Analítica de cobranza</h3>
+            <p data-en="SQL Server model, daily Python ETL, data mart, Power BI KPI dashboard and an AI-generated executive summary.">Modelo en SQL Server, ETL diario en Python, data mart, dashboard de KPIs en Power BI y resumen ejecutivo generado con IA.</p>
+            <div class="tags"><span class="tag">SQL Server</span><span class="tag">Python</span><span class="tag">Power BI</span><span class="tag">Gemini API</span></div>
+            <div class="links-row"><a class="mini" href="https://github.com/zseuz/analitica-cobranza-sql-etl-powerbi" target="_blank" rel="noopener" data-en="Code">Código</a></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="fullstack auto">
+          <div class="shot"><img src="img/job-search.jpg" alt="Buscador de empleos con filtros y listado de ofertas" loading="lazy" width="800" height="500"></div>
+          <div class="body">
+            <h3 data-en="Job search aggregator">Buscador de empleos</h3>
+            <p data-en="Collects listings from 7 job boards into one page with filters by technology, salary, date and work mode. 380 tests, 99% coverage.">Reúne ofertas de 7 portales en una sola página con filtros por tecnología, salario, fecha y modalidad. 380 tests, 99% de cobertura.</p>
+            <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">Scraping</span><span class="tag">MVC</span></div>
+            <div class="links-row"><a class="mini" href="https://github.com/zseuz/-job-search" target="_blank" rel="noopener" data-en="Code">Código</a></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="fullstack">
+          <div class="shot"><img src="img/biblioteca.jpg" alt="Panel de estadísticas del Sistema de Biblioteca" loading="lazy" width="800" height="500"></div>
+          <div class="body">
+            <h3 data-en="Library System">Sistema de Biblioteca</h3>
+            <p data-en="Management of books, users and loans with business rules and a statistics dashboard.">Gestión de libros, usuarios y préstamos con reglas de negocio y panel de estadísticas.</p>
+            <div class="tags"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Angular</span><span class="tag">H2</span></div>
+            <div class="links-row"><a class="mini" href="https://github.com/zseuz/biblioteca" target="_blank" rel="noopener" data-en="Code">Código</a></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="fullstack">
+          <div class="shot"><img src="img/biblioteca-chatbot.jpg" alt="Conversación con el asistente de la biblioteca" loading="lazy" width="800" height="500"></div>
+          <div class="body">
+            <h3 data-en="Library Assistant">Asistente de la Biblioteca</h3>
+            <p data-en="Spanish-language chatbot that queries the library API: overdue loans, availability and more, rule-based with no AI cost.">Chatbot en español que consulta la API de la biblioteca: préstamos vencidos, disponibilidad y más, con reglas y sin costo de IA.</p>
+            <div class="tags"><span class="tag">Spring MVC</span><span class="tag">Angular</span><span class="tag">REST</span></div>
+            <div class="links-row"><a class="mini" href="https://github.com/zseuz/biblioteca-chatbot" target="_blank" rel="noopener" data-en="Code">Código</a></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="auto">
+          <div class="cover c-auto"><div><div class="ic">⚙️</div><small>4 FLUJOS · N8N</small></div></div>
+          <div class="body">
+            <h3 data-en="n8n automations">Automatizaciones n8n</h3>
+            <p data-en="Loan reminders, weekly report, book import from CSV and an alert when the server goes down.">Recordatorios de préstamos, informe semanal, importación de libros desde CSV y alerta si el servidor se cae.</p>
+            <div class="tags"><span class="tag">n8n</span><span class="tag">Node.js</span><span class="tag" data-en="Automation">Automatización</span></div>
+            <div class="links-row"><a class="mini" href="https://github.com/zseuz/biblioteca-n8n" target="_blank" rel="noopener" data-en="Code">Código</a></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="datos">
+          <div class="cover c-chat"><div><div class="ic">💬</div><small>WHATSAPP API → ETL → POWER BI</small></div></div>
+          <div class="body">
+            <h3 data-en="ETL pipeline · WhatsApp campaign">Pipeline ETL · Campaña WhatsApp</h3>
+            <p data-en="Ingestion, processing and performance analysis of a mass WhatsApp API campaign, explored in Power BI.">Ingesta, procesamiento y análisis del rendimiento de una campaña masiva por la API de WhatsApp, explotado en Power BI.</p>
+            <div class="tags"><span class="tag">Python</span><span class="tag">ETL</span><span class="tag">Power BI</span></div>
+            <div class="links-row"><a class="mini" href="https://github.com/zseuz/analisis-campa-a" target="_blank" rel="noopener" data-en="Code">Código</a></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="fullstack">
+          <div class="shot"><img src="img/pokemon-champions.jpg" alt="Ranking del meta en Champions Coach" loading="lazy" width="800" height="500"></div>
+          <div class="body">
+            <h3>Champions Coach</h3>
+            <p data-en="Competitive assistant for Pokémon Champions: meta ranking, team building, builds and a turn-by-turn battle assistant.">Asistente competitivo para Pokémon Champions: ranking del meta, armado de equipos, builds y asistente de combate turno a turno.</p>
+            <div class="tags"><span class="tag">React 19</span><span class="tag">TypeScript</span><span class="tag">Vite</span><span class="tag">SQLite</span></div>
+            <div class="links-row"><a class="mini" href="https://github.com/zseuz/pokemon-champions" target="_blank" rel="noopener" data-en="Code">Código</a></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="fullstack">
+          <div class="shot"><img src="img/anime-tracker.jpg" alt="Catálogo de AnimeTracker" loading="lazy" width="800" height="500"></div>
+          <div class="body">
+            <h3>AnimeTracker</h3>
+            <p data-en="Browse anime, mark watched episodes and get notified about new ones. E2E tests with Playwright and accessibility checks with axe.">Explora animes, marca capítulos vistos y recibe aviso de nuevos episodios. Pruebas e2e con Playwright y accesibilidad con axe.</p>
+            <div class="tags"><span class="tag">Angular</span><span class="tag">Express</span><span class="tag">MySQL</span><span class="tag">Playwright</span></div>
+            <div class="links-row"><a class="mini" href="https://github.com/zseuz/anime-tracker" target="_blank" rel="noopener" data-en="Code">Código</a></div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="fullstack">
+          <span class="badge" data-en="LIVE DEMO">DEMO EN VIVO</span>
+          <div class="shot"><img src="img/google-forms.jpg" alt="Editor de formularios de Forms Clone" loading="lazy" width="800" height="500"></div>
+          <div class="body">
+            <h3>Forms Clone</h3>
+            <p data-en="Google Forms clone: drag &amp; drop builder, 8 question types, validation and a visual summary of responses.">Clon de Google Forms: constructor drag &amp; drop, 8 tipos de pregunta, validación y resumen visual de respuestas.</p>
+            <div class="tags"><span class="tag">Angular</span><span class="tag">Material</span><span class="tag">TypeScript</span></div>
+            <div class="links-row">
+              <a class="mini demo" href="https://zseuz.github.io/google-forms/" target="_blank" rel="noopener" data-en="Try demo ↗">Probar demo ↗</a>
+              <a class="mini" href="https://github.com/zseuz/google-forms" target="_blank" rel="noopener" data-en="Code">Código</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card" data-cat="fullstack">
+          <div class="cover c-fin"><div><div class="ic">💰</div><small>FASTAPI · MYSQL · ANGULAR</small></div></div>
+          <div class="body">
+            <h3 data-en="Personal finance tracker">Control de finanzas</h3>
+            <p data-en="Personal finance REST API (transactions, categories and dashboard) with its Angular front end.">API REST de finanzas personales (transacciones, categorías y dashboard) con su frontend en Angular.</p>
+            <div class="tags"><span class="tag">FastAPI</span><span class="tag">SQLAlchemy</span><span class="tag">MySQL</span><span class="tag">Angular</span></div>
+            <div class="links-row">
+              <a class="mini" href="https://github.com/zseuz/finanzas-back" target="_blank" rel="noopener">Backend</a>
+              <a class="mini" href="https://github.com/zseuz/finanzas-front" target="_blank" rel="noopener">Frontend</a>
+            </div>
+          </div>
+        </article>
       </div>
     </section>
 
     <section id="habilidades">
-      <h2>Habilidades técnicas</h2>
+      <h2 data-en="Technical skills">Habilidades técnicas</h2>
       <div class="skills">
         <div class="skill">
           <h3>Full Stack &amp; APIs</h3>
           <div class="tags"><span class="tag">Python</span><span class="tag">Java</span><span class="tag">Spring Boot</span><span class="tag">Hibernate/JPA</span><span class="tag">PHP · Laravel</span><span class="tag">Node.js</span><span class="tag">TypeScript</span><span class="tag">Angular</span><span class="tag">React</span><span class="tag">Vue.js</span><span class="tag">REST</span></div>
         </div>
         <div class="skill">
-          <h3>Datos, ETL &amp; BI</h3>
+          <h3 data-en="Data, ETL &amp; BI">Datos, ETL &amp; BI</h3>
           <div class="tags"><span class="tag">Pandas</span><span class="tag">ETL/ELT</span><span class="tag">Playwright/RPA</span><span class="tag">Power BI · DAX</span><span class="tag">Power Query</span><span class="tag">Tableau</span><span class="tag">KPIs</span><span class="tag">RIPS · XML · CUV</span></div>
         </div>
         <div class="skill">
-          <h3>Bases de datos &amp; SQL</h3>
-          <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">SQL Server</span><span class="tag">MySQL</span><span class="tag">Procedimientos almacenados</span><span class="tag">Star Schema</span><span class="tag">Tuning</span></div>
+          <h3 data-en="Databases &amp; SQL">Bases de datos &amp; SQL</h3>
+          <div class="tags"><span class="tag">PostgreSQL</span><span class="tag">SQL Server</span><span class="tag">MySQL</span><span class="tag" data-en="Stored procedures">Procedimientos almacenados</span><span class="tag">Star Schema</span><span class="tag">Tuning</span></div>
         </div>
         <div class="skill">
-          <h3>IA &amp; LLMs</h3>
+          <h3 data-en="AI &amp; LLMs">IA &amp; LLMs</h3>
           <div class="tags"><span class="tag">Claude AI</span><span class="tag">OpenAI API</span><span class="tag">Prompt Engineering</span><span class="tag">AI-Driven Development</span></div>
         </div>
         <div class="skill">
-          <h3>Cloud, DevOps &amp; herramientas</h3>
+          <h3 data-en="Cloud, DevOps &amp; tools">Cloud, DevOps &amp; herramientas</h3>
           <div class="tags"><span class="tag">Linux</span><span class="tag">Cloud</span><span class="tag">Cron jobs</span><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">n8n</span><span class="tag">Web scraping</span></div>
         </div>
       </div>
     </section>
 
     <section id="educacion" class="edu">
-      <h2>Educación</h2>
-      <b>Tecnólogo en Análisis y Desarrollo de Sistemas de Información</b>
-      <span>Servicio Nacional de Aprendizaje (SENA) · 2018 – 2020</span>
+      <h2 data-en="Education">Educación</h2>
+      <b data-en="Technologist in Information Systems Analysis and Development">Tecnólogo en Análisis y Desarrollo de Sistemas de Información</b>
+      <span data-en="National Learning Service (SENA) · 2018 – 2020">Servicio Nacional de Aprendizaje (SENA) · 2018 – 2020</span>
+    </section>
+
+    <section id="contacto">
+      <h2 data-en="Contact">Contacto</h2>
+      <div class="cta">
+        <h3 data-en="Shall we work together?">¿Trabajamos juntos?</h3>
+        <p data-en="I'm open to full stack, data and BI roles, remote or in Bogotá. Message me and I'll get back to you soon.">Estoy abierto a oportunidades como desarrollador full stack, analista de datos o BI, remoto o en Bogotá. Escríbeme y te respondo pronto.</p>
+        <div class="btns">
+          <a class="btn wa js-wa" href="https://wa.me/573135612983" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.3Z"/></svg>
+            <span data-en="Message on WhatsApp">Escribir por WhatsApp</span>
+          </a>
+          <a class="btn" href="mailto:jonathanramir52@gmail.com" data-en="✉️ Send email">✉️ Enviar correo</a>
+          <a class="btn" href="https://www.linkedin.com/in/jonathan-pava-ramirez/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
     </section>
   </main>
+
+  <a class="wa-float js-wa" href="https://wa.me/573135612983" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp" title="WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.5-.3Z"/></svg>
+  </a>
 
   <footer>
     <div class="wrap">© 2026 Jonathan Ramírez · <a href="https://github.com/zseuz">github.com/zseuz</a></div>
@@ -410,34 +579,75 @@
 
   <script>
     const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const store = {
+      get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+      set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+    };
 
     // Botón de modo claro / oscuro
     document.getElementById("theme-toggle").addEventListener("click", () => {
       const root = document.documentElement;
       const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
       root.dataset.theme = dark ? "light" : "dark";
-      try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+      store.set("theme", root.dataset.theme);
     });
 
+    // Idioma: cada texto traducible guarda su versión en inglés en data-en
+    const WORDS = {
+      es: ["Cloud, ETL & BI", "Java · Spring Boot", "Angular · React · Vue", "Python · Pandas · RPA", "Power BI · SQL", "IA generativa · LLMs"],
+      en: ["Cloud, ETL & BI", "Java · Spring Boot", "Angular · React · Vue", "Python · Pandas · RPA", "Power BI · SQL", "Generative AI · LLMs"]
+    };
+    const WA_TEXT = {
+      es: "Hola Jonathan, vi tu portafolio y me gustaría hablar contigo.",
+      en: "Hi Jonathan, I saw your portfolio and would like to talk with you."
+    };
+    let lang = "es";
+    const i18n = document.querySelectorAll("[data-en]");
+    i18n.forEach(el => el.dataset.es = el.innerHTML);
+    function setLang(l) {
+      lang = l;
+      document.documentElement.lang = l;
+      i18n.forEach(el => el.innerHTML = el.dataset[l]);
+      document.getElementById("lang-toggle").textContent = l === "es" ? "EN" : "ES";
+      document.title = l === "es" ? "Jonathan Ramírez · Full Stack & Datos" : "Jonathan Ramírez · Full Stack & Data";
+      document.querySelectorAll(".js-wa").forEach(a => a.href = "https://wa.me/573135612983?text=" + encodeURIComponent(WA_TEXT[l]));
+      store.set("lang", l);
+    }
+    document.getElementById("lang-toggle").addEventListener("click", () => setLang(lang === "es" ? "en" : "es"));
+    setLang(store.get("lang") || (navigator.language.startsWith("es") ? "es" : "en"));
+
     // Texto que se escribe y se borra en el encabezado
-    const words = ["Cloud, ETL & BI", "Java · Spring Boot", "Angular · React · Vue", "Python · Pandas · RPA", "Power BI · SQL", "IA generativa · LLMs"];
     const typed = document.getElementById("typed");
     if (!calm) {
-      let w = 0, i = words[0].length, deleting = true;
+      let w = 0, i = WORDS[lang][0].length, deleting = true;
       (function tick() {
-        const word = words[w];
+        const word = WORDS[lang][w];
         typed.textContent = word.slice(0, i);
         if (deleting) {
-          if (--i < 0) { deleting = false; w = (w + 1) % words.length; i = 0; }
-        } else if (++i > words[w].length) {
+          if (--i < 0) { deleting = false; w = (w + 1) % WORDS[lang].length; i = 0; }
+        } else if (++i > WORDS[lang][w].length) {
           deleting = true; return setTimeout(tick, 1800);
         }
         setTimeout(tick, deleting ? 35 : 75);
       })();
     }
 
+    // Filtros de proyectos
+    const cards = document.querySelectorAll(".card");
+    document.querySelectorAll(".filter").forEach(btn => {
+      const f = btn.dataset.filter;
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".filter").forEach(b => b.classList.toggle("on", b === btn));
+        cards.forEach(c => {
+          const show = f === "all" || c.dataset.cat.split(" ").includes(f);
+          c.classList.toggle("hide", !show);
+          if (show) c.classList.add("in");
+        });
+      });
+    });
+
     // Aparición al hacer scroll
-    const targets = document.querySelectorAll("section h2, .lead, .stat, .job, .card, .skill, .edu b, .edu span");
+    const targets = document.querySelectorAll("section h2, .lead, .stat, .job, .card, .skill, .edu b, .edu span, .cta");
     targets.forEach((el, n) => {
       el.classList.add("reveal");
       el.style.transitionDelay = (n % 4) * 80 + "ms";
@@ -453,14 +663,15 @@
 
     // Menú: muestra la sección al instante y marca el enlace activo
     const links = document.querySelectorAll("nav a.link");
-    links.forEach(a => a.addEventListener("click", () => {
-      document.querySelectorAll(a.getAttribute("href") + " .reveal").forEach(el => el.classList.add("in"));
+    document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener("click", () => {
+      const id = a.getAttribute("href");
+      if (id.length > 1) document.querySelectorAll(id + " .reveal").forEach(el => el.classList.add("in"));
     }));
     const spy = new IntersectionObserver(entries => entries.forEach(e => {
       if (e.isIntersecting) links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
     }), { rootMargin: "-45% 0px -50% 0px" });
     document.querySelectorAll("section[id]").forEach(s => spy.observe(s));
-    if (location.hash) document.querySelectorAll(location.hash + " .reveal").forEach(el => el.classList.add("in"));
+    if (location.hash.length > 1) document.querySelectorAll(location.hash + " .reveal").forEach(el => el.classList.add("in"));
 
     // Contadores de las estadísticas
     function countUp(el) {
@@ -474,7 +685,7 @@
     }
 
     // Brillo que sigue al cursor en las tarjetas
-    document.querySelectorAll(".card").forEach(c => c.addEventListener("mousemove", e => {
+    cards.forEach(c => c.addEventListener("mousemove", e => {
       const r = c.getBoundingClientRect();
       c.style.setProperty("--mx", e.clientX - r.left + "px");
       c.style.setProperty("--my", e.clientY - r.top + "px");
