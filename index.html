@@ -90,7 +90,93 @@
 
     footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border); }
 
+    /* ---------- Animaciones ---------- */
+    :root { --accent2: #9333ea; --accent3: #06b6d4; }
+    @media (prefers-color-scheme: dark) { :root { --accent2: #c084fc; --accent3: #22d3ee; } }
+
+    .bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+    .blob { position: absolute; width: 480px; height: 480px; border-radius: 50%; filter: blur(90px); opacity: .28; }
+    .blob.b1 { background: var(--accent); top: -140px; left: -120px; animation: float1 18s ease-in-out infinite; }
+    .blob.b2 { background: var(--accent2); top: 30%; right: -160px; animation: float2 22s ease-in-out infinite; }
+    .blob.b3 { background: var(--accent3); bottom: -180px; left: 25%; animation: float1 26s ease-in-out infinite reverse; }
+    @keyframes float1 { 50% { transform: translate(120px, 90px) scale(1.15); } }
+    @keyframes float2 { 50% { transform: translate(-100px, -120px) scale(.9); } }
+
+    .grad {
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+      background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+      animation: shine 8s linear infinite;
+    }
+    @keyframes shine { to { background-position: 300% 0; } }
+
+    .avatar {
+      width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; margin-bottom: 20px;
+      font-weight: 700; font-size: 30px; color: #fff; position: relative;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      animation: pop .7s cubic-bezier(.2, 1.6, .4, 1) both;
+    }
+    .avatar::after {
+      content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--accent2);
+      animation: pulse 2.4s ease-out infinite;
+    }
+    @keyframes pop { from { transform: scale(0); } }
+    @keyframes pulse { from { transform: scale(.9); opacity: .9; } to { transform: scale(1.35); opacity: 0; } }
+
+    header > * { animation: rise .8s ease both; }
+    header > *:nth-child(2) { animation-delay: .1s; }
+    header > *:nth-child(3) { animation-delay: .2s; }
+    header > *:nth-child(4) { animation-delay: .3s; }
+    header > *:nth-child(5) { animation-delay: .4s; }
+    @keyframes rise { from { opacity: 0; transform: translateY(24px); } }
+
+    .typed { color: var(--text); font-weight: 600; }
+    .typed::after { content: "▍"; color: var(--accent); animation: blink 1s steps(1) infinite; margin-left: 2px; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .btn { transition: transform .2s, box-shadow .2s; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px -8px var(--accent); }
+    .btn.primary {
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent));
+      background-size: 200% 100%; border: 0; animation: shine 6s linear infinite;
+    }
+
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    .stat, .skill { transition: transform .25s, box-shadow .25s; }
+    .stat:hover, .skill:hover { transform: translateY(-4px); box-shadow: 0 12px 30px -14px var(--accent); }
+
+    .card { position: relative; overflow: hidden; color: var(--text); }
+    .card::before {
+      content: ""; position: absolute; inset: 0; opacity: 0; transition: opacity .3s; pointer-events: none;
+      background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 22%, transparent), transparent 60%);
+    }
+    .card:hover::before { opacity: 1; }
+    .card:hover { text-decoration: none; transform: translateY(-6px); box-shadow: 0 18px 40px -20px var(--accent); }
+    .card { transition: border-color .2s, transform .25s, box-shadow .25s; }
+
+    .tag { transition: background .2s, color .2s; }
+    .skill:hover .tag { background: var(--accent-soft); color: var(--accent); }
+
+    .job { position: relative; }
+    .job > div:last-child { border-left: 2px solid var(--border); padding-left: 20px; position: relative; }
+    .job > div:last-child::before {
+      content: ""; position: absolute; left: -7px; top: 6px; width: 12px; height: 12px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft);
+    }
+
+    #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 20;
+      background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3)); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
     @media print {
+      .bg, #progress { display: none; }
+      .reveal { opacity: 1; transform: none; }
+      .grad { color: #000; background: none; }
       nav, .btns, footer { display: none; }
       body { background: #fff; color: #000; }
       section { padding: 16px 0; }
@@ -99,6 +185,8 @@
   </style>
 </head>
 <body>
+  <div id="progress"></div>
+  <div class="bg"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
   <nav>
     <div class="wrap">
       <a class="brand" href="#">Jonathan Ramírez</a>
@@ -111,8 +199,9 @@
 
   <main class="wrap">
     <header>
-      <h1>Jonathan Stiven Ramírez Pava</h1>
-      <p class="role">Desarrollador Full Stack &amp; Analista de Datos · Cloud, ETL &amp; BI</p>
+      <div class="avatar">JR</div>
+      <h1>Jonathan Stiven <span class="grad">Ramírez Pava</span></h1>
+      <p class="role">Desarrollador Full Stack &amp; Analista de Datos · <span class="typed" id="typed">Cloud, ETL &amp; BI</span></p>
       <div class="contact">
         <span>📍 Bogotá, Colombia</span>
         <a href="mailto:jonathanramir52@gmail.com">✉️ jonathanramir52@gmail.com</a>
@@ -135,10 +224,10 @@
         (PostgreSQL, SQL Server, MySQL), además de desarrollo asistido por IA con LLMs como Claude y OpenAI.
       </p>
       <div class="stats">
-        <div class="stat"><b>3+</b><span>años de experiencia</span></div>
-        <div class="stat"><b>-80%</b><span>trabajo manual con RPA/ETL</span></div>
-        <div class="stat"><b>-50%</b><span>latencia de consultas SQL</span></div>
-        <div class="stat"><b>10+</b><span>proyectos recientes en GitHub</span></div>
+        <div class="stat"><b data-count="3" data-suffix="+">3+</b><span>años de experiencia</span></div>
+        <div class="stat"><b data-count="80" data-prefix="-" data-suffix="%">-80%</b><span>trabajo manual con RPA/ETL</span></div>
+        <div class="stat"><b data-count="50" data-prefix="-" data-suffix="%">-50%</b><span>latencia de consultas SQL</span></div>
+        <div class="stat"><b data-count="10" data-suffix="+">10+</b><span>proyectos recientes en GitHub</span></div>
       </div>
     </section>
 
@@ -287,5 +376,66 @@
   <footer>
     <div class="wrap">© 2026 Jonathan Ramírez · <a href="https://github.com/zseuz">github.com/zseuz</a></div>
   </footer>
+
+  <script>
+    const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Texto que se escribe y se borra en el encabezado
+    const words = ["Cloud, ETL & BI", "Java · Spring Boot", "Angular · React · Vue", "Python · Pandas · RPA", "Power BI · SQL", "IA generativa · LLMs"];
+    const typed = document.getElementById("typed");
+    if (!calm) {
+      let w = 0, i = words[0].length, deleting = true;
+      (function tick() {
+        const word = words[w];
+        typed.textContent = word.slice(0, i);
+        if (deleting) {
+          if (--i < 0) { deleting = false; w = (w + 1) % words.length; i = 0; }
+        } else if (++i > words[w].length) {
+          deleting = true; return setTimeout(tick, 1800);
+        }
+        setTimeout(tick, deleting ? 35 : 75);
+      })();
+    }
+
+    // Aparición al hacer scroll
+    const targets = document.querySelectorAll("section h2, .lead, .stat, .job, .card, .skill, .edu b, .edu span");
+    targets.forEach((el, n) => {
+      el.classList.add("reveal");
+      el.style.transitionDelay = (n % 4) * 80 + "ms";
+    });
+    const io = new IntersectionObserver(entries => entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("in");
+      io.unobserve(e.target);
+      const b = e.target.querySelector("[data-count]");
+      if (b && !calm) countUp(b);
+    }), { threshold: 0.15 });
+    targets.forEach(el => io.observe(el));
+
+    // Contadores de las estadísticas
+    function countUp(el) {
+      const end = +el.dataset.count, pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
+      const t0 = performance.now();
+      (function step(t) {
+        const p = Math.min((t - t0) / 1200, 1);
+        el.textContent = pre + Math.round(end * (1 - Math.pow(1 - p, 3))) + suf;
+        if (p < 1) requestAnimationFrame(step);
+      })(t0);
+    }
+
+    // Brillo que sigue al cursor en las tarjetas
+    document.querySelectorAll(".card").forEach(c => c.addEventListener("mousemove", e => {
+      const r = c.getBoundingClientRect();
+      c.style.setProperty("--mx", e.clientX - r.left + "px");
+      c.style.setProperty("--my", e.clientY - r.top + "px");
+    }));
+
+    // Barra de progreso de lectura
+    const bar = document.getElementById("progress");
+    addEventListener("scroll", () => {
+      const h = document.documentElement;
+      bar.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100 + "%";
+    }, { passive: true });
+  </script>
 </body>
 </html>
