@@ -165,6 +165,10 @@
       background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft);
     }
 
+    section { scroll-margin-top: 64px; }
+    nav a.link { transition: color .2s; }
+    nav a.link.active { color: var(--accent); font-weight: 600; }
+
     #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 20;
       background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3)); }
 
@@ -411,6 +415,17 @@
       if (b && !calm) countUp(b);
     }), { threshold: 0.15 });
     targets.forEach(el => io.observe(el));
+
+    // Menú: muestra la sección al instante y marca el enlace activo
+    const links = document.querySelectorAll("nav a.link");
+    links.forEach(a => a.addEventListener("click", () => {
+      document.querySelectorAll(a.getAttribute("href") + " .reveal").forEach(el => el.classList.add("in"));
+    }));
+    const spy = new IntersectionObserver(entries => entries.forEach(e => {
+      if (e.isIntersecting) links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id));
+    }), { rootMargin: "-45% 0px -50% 0px" });
+    document.querySelectorAll("section[id]").forEach(s => spy.observe(s));
+    if (location.hash) document.querySelectorAll(location.hash + " .reveal").forEach(el => el.classList.add("in"));
 
     // Contadores de las estadísticas
     function countUp(el) {
